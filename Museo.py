@@ -1,5 +1,6 @@
 from Departamento import Departamento
 from Obra import Obra 
+from nationalities import nacionalities
 import requests
 
 class Museo():
@@ -64,6 +65,18 @@ class Museo():
                     else:
                         print("No hay más obras para mostrar.")
             elif opcion == "2":
+                print("Nacionalidades: ")
+                for nacionalidad in nacionalities:
+                    print(nacionalidad)
+                nacionalidad = input("Seleccione una opcion: ")
+                response = requests.get(self.api_busqueda + nacionalidad)
+                response = response.json()
+                ids = response["objectIDs"]
+                if not ids: 
+                    print("No se encontraron obras para la nacionalidad seleccionada.")
+                    continue
+                total = len(ids)
+                i = 0 #falta el while
                 pass
             elif opcion == "3":
                 pass
