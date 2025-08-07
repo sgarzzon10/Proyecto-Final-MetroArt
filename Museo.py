@@ -41,7 +41,13 @@ class Museo():
     
     
     def obras_nombre_autor():
-        
+        nombre_autor = input("Ingrese el nombre del autor: ")
+        response = requests.get(self.api_busqueda + nombre_autor)
+        response = response.json()
+        ids = response['objectIDs']
+        if not ids:
+            print("No se encontraron obras para el autor seleccionado. ")
+        total = len(ids)
     
     
     
