@@ -48,7 +48,21 @@ class Museo():
         if not ids:
             print("No se encontraron obras para el autor seleccionado. ")
         total = len(ids)
-    
+        i = 0
+        while i < total:
+            bloque_ids = ids[i:i+10]
+            bloque_obras = []
+            for id in bloque_ids:
+                response2 = requests.get(self.api_obra_id + str(id))
+                obra = response2.json()
+                obra_obj = Obra(
+                    obra['objectID'],
+                    obra['title'],
+                    obra['artistDisplayName']
+                )
+                bloque_obras.append(obra_obj)
+            print(f"Mostrar obras: {i+1} a {min(i+10, total)}:")
+            
     
     
     
