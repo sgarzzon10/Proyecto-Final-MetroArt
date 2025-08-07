@@ -24,60 +24,11 @@ class Museo():
                            
                            
             if opcion == '1':
-                for departamento in self.departamentos:
-                    departamento.mostrar()
-                eleccion = input("Ingrese el ID del departamento: ")
-                response = requests.get(self.api_obras_departamento + eleccion)
-                response = response.json()
-                ids = response['objectIDs']
-                departamento_opcion = None
-                for departamento in self.departamentos:
-                    if str(departamento.id) == eleccion:
-                        departamento_opcion = departamento
-                if departamento_opcion is None:
-                    print("Departamento no encontrado. Intente de nuevo.")
-                    continue
-                total = len(ids)
-                i = 0
-                while i < total:
-                    bloque_ids = ids[i:i+10]
-                    bloque_obras = []
-                    for id in bloque_ids:
-                        response2 = requests.get(self.api_obra_id + str(id))
-                        obra = response2.json()
-                        obra_obj = Obra(
-                            obra['objectID'],
-                            obra["title"],
-                            obra["artistDisplayName"]
-                        )         
-                        
-                        departamento_opcion.nueva_obra(obra_obj)
-                        bloque_obras.append(obra_obj)
-                        
-                    print(f"Mostrando obras {i+1} a {min(i+10, total)}:")
-                    for obra in bloque_obras:
-                        print(f"ID: {obra.id}, Título: {obra.titulo}, Autor: {obra.artista}")
-                    i += 10
-                    if i < total:
-                        opcion_mas = input("¿Desea ver más obras? (s para sí, cualquier otra tecla para salir): ")
-                        if opcion_mas.lower() != 's':
-                            break
-                    else:
-                        print("No hay más obras para mostrar.")
+                self.obras_depto()
+                
             elif opcion == "2":
-                print("Nacionalidades: ")
-                for nacionalidad in nacionalities:
-                    print(nacionalidad)
-                nacionalidad = input("Seleccione una opcion: ")
-                response = requests.get(self.api_busqueda + nacionalidad)
-                response = response.json()
-                ids = response["objectIDs"]
-                if not ids: 
-                    print("No se encontraron obras para la nacionalidad seleccionada.")
-                    continue
-                total = len(ids)
-                i = 0 #falta el while
-                pass
+                self.obras_nacionalidades()
+                
             elif opcion == "3":
                 pass
             elif opcion == "4":
@@ -86,6 +37,84 @@ class Museo():
                 break
             else:
                 print("Seleccione una opcion valida!")
+    
+    def obras_depto(self):
+        for departamento in self.departamentos:
+                    departamento.mostrar()
+        eleccion = input("Ingrese el ID del departamento: ")
+        response = requests.get(self.api_obras_departamento + eleccion)
+        response = response.json()
+        ids = response['objectIDs']
+        departamento_opcion = None
+        for departamento in self.departamentos:
+            if str(departamento.id) == eleccion:
+                departamento_opcion = departamento
+            if departamento_opcion is None:
+                print("Departamento no encontrado. Intente de nuevo.")
+                continue
+            total = len(ids)
+            i = 0
+            while i < total:
+                bloque_ids = ids[i:i+10]
+                bloque_obras = []
+                for id in bloque_ids:
+                    response2 = requests.get(self.api_obra_id + str(id))
+                    obra = response2.json()
+                    obra_obj = Obra(
+                        obra['objectID'],
+                        obra["title"],
+                        obra["artistDisplayName"]
+                    )         
+                        
+                    departamento_opcion.nueva_obra(obra_obj)
+                    bloque_obras.append(obra_obj)
+                        
+                print(f"Mostrando obras {i+1} a {min(i+10, total)}:")
+                for obra in bloque_obras:
+                    print(f"ID: {obra.id}, Título: {obra.titulo}, Autor: {obra.artista}")
+                i += 10
+                if i < total:
+                    opcion_mas = input("¿Desea ver más obras? (s para sí, cualquier otra tecla para salir): ")
+                    if opcion_mas.lower() != 's':
+                        break
+                else:
+                    print("No hay más obras para mostrar.")
+    
+    def obras_nacionalidades(self):
+        print("Nacionalidades: ")
+        for nacionalidad in nacionalities:
+            print(nacionalidad)
+        nacionalidad = input("Seleccione una opcion: ")
+        response = requests.get(self.api_busqueda + nacionalidad)
+        response = response.json()
+        ids = response["objectIDs"]
+        if not ids: 
+            print("No se encontraron obras para la nacionalidad seleccionada.")
+            continue
+        total = len(ids)
+        i = 0 #falta el while
+        while i < total:
+            bloque_ids = ids[i:i+10]
+            bloque_obras = []
+            for id in bloque_ids:
+                responde2 = requests.get(self.api_obra_id + str(id))
+                obra = responde2.json()
+                obra_obj = Obra(
+                    obra["objectID"],
+                    obra["title"],
+                    obra['artistDisplayName']
+                )
+                bloque_obras.append(obra_obj)
+            print(f"Mostrando obras {i+1} a {min(i+10, total)}: ")
+            for obra_obj in bloque_ids:
+                obra_obj.mostrar()
+            i += 10
+            if i < total:
+                opcion_mas = input("¿Desea ver mas obras? (s para si, cualquier otra tecla para salir): ")
+                if opcion_mas.lower() != "s":
+                    break
+                else:
+                    print("No hay mas obras para mostrar.")
                 
     def obtener_departamentos(self):
         r = requests.get(self.api_departamento)
