@@ -30,13 +30,32 @@ class Museo():
                 self.obras_nacionalidades()
                 
             elif opcion == "3":
-                pass
+                self.obras_nombre_autor()
             elif opcion == "4":
                 pass
             elif opcion == "5":
                 break
             else:
                 print("Seleccione una opcion valida!")
+    
+    
+    
+    def obras_nombre_autor():
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     def obras_depto(self):
         for departamento in self.departamentos:
