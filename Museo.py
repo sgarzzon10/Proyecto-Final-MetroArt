@@ -90,7 +90,7 @@ class Museo():
         ids = response["objectIDs"]
         if not ids: 
             print("No se encontraron obras para la nacionalidad seleccionada.")
-            continue
+            
         total = len(ids)
         i = 0 #falta el while
         while i < total:
