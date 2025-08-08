@@ -86,9 +86,21 @@ class Museo():
         obra = response.json()
         if not obra:
             print("Obra no encontrada.")
-            continue
-    
-    
+        
+        obra_obj = Obra(
+            obra['objectID'],
+            obra["title"],
+            obra["artistDisplayName"]
+        )
+        obra_obj.detalles_obra(
+            obra["artistNationality"],
+            obra["artistBeginDate"],
+            obra["artistEndDate"],
+            obra["objectDate"], 
+            obra["primaryImage"]
+        )
+        obra_obj.mostrar_detalles()
+        
     
     
     
