@@ -40,7 +40,7 @@ class Museo():
     
     
     
-    def obras_nombre_autor():
+    def obras_nombre_autor(self):
         nombre_autor = input("Ingrese el nombre del autor: ")
         response = requests.get(self.api_busqueda + nombre_autor)
         response = response.json()
@@ -71,16 +71,12 @@ class Museo():
                     break
             else:
                 print("No hay mas obras para mostrar. ")
-            
+
     
     
     
     
-    
-    
-    
-    
-    def mostrar_detalles():
+    def mostrar_detalles(self):
         obra_id = input("Ingrese el ID de la obra: ")
         response = requests.get(self.api_obra_id + obra_id)
         obra = response.json()
@@ -158,7 +154,7 @@ class Museo():
             print("No se encontraron obras para la nacionalidad seleccionada.")
             
         total = len(ids)
-        i = 0 #falta el while
+        i = 0 
         while i < total:
             bloque_ids = ids[i:i+10]
             bloque_obras = []
