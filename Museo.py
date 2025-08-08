@@ -62,6 +62,15 @@ class Museo():
                 )
                 bloque_obras.append(obra_obj)
             print(f"Mostrar obras: {i+1} a {min(i+10, total)}:")
+            for obra_obj in bloque_obras:
+                obra_obj.mostrar()
+            i += 10
+            if i < total:
+                opcion_mas = input("Desea ver mas obras? (s para si, cualquier otra tecla para salir): ")
+                if opcion_mas.lower() != "s":
+                    break
+            else:
+                print("No hay mas obras para mostrar. ")
             
     
     
