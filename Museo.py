@@ -32,7 +32,7 @@ class Museo():
             elif opcion == "3":
                 self.obras_nombre_autor()
             elif opcion == "4":
-                pass
+                self.mostrar_detalles()
             elif opcion == "5":
                 break
             else:
@@ -80,7 +80,13 @@ class Museo():
     
     
     
-    
+    def mostrar_detalles():
+        obra_id = input("Ingrese el ID de la obra: ")
+        response = requests.get(self.api_obra_id + obra_id)
+        obra = response.json()
+        if not obra:
+            print("Obra no encontrada.")
+            continue
     
     
     
